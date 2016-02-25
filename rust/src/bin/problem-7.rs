@@ -2,18 +2,8 @@
 // see that the 6th prime is 13.
 // 
 // What is the 10 001st prime number?
-
-// Determine whether a number is prime
-fn is_prime(n: i32) -> bool {
-    // We don't need to look at factors > sqrt(n)
-    let max_factor = ((n as f32).sqrt() as i32) + 1;
-    for f in (2..max_factor).rev() {
-        if n % f == 0 {
-            return false;
-        }
-    }
-    true
-}
+extern crate euler_util;
+use euler_util::is_prime;
 
 fn main() {
     let mut primes_seen = 0;
