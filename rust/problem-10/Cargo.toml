@@ -1,6 +1,0 @@
-[package]
-name = "problem-10"
-version = "0.1.0"
-authors = ["Peter Beard <peter.b.beard+github@gmail.com>"]
-
-[dependencies]
