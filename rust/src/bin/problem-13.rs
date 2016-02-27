@@ -1,3 +1,6 @@
+// Copyright 2016 Peter Beard
+// Distributed under the GNU GPL v2. For full terms, see the LICENSE file.
+//
 // Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.
 // ..
 

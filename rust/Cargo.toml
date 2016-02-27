@@ -1,7 +1,11 @@
 [package]
-name = "rust"
+name = "project-euler"
+description = "Rust solutions to the Project Euler problems."
 version = "0.1.0"
 authors = ["Peter Beard <peter.b.beard+github@gmail.com>"]
+readme = "README.md"
+repository="https://github.com/PeterBeard/project-euler"
+license = "GPL-2.0"
 
 [dependencies]
 

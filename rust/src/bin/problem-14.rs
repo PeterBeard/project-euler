@@ -1,3 +1,6 @@
+// Copyright 2016 Peter Beard
+// Distributed under the GNU GPL v2. For full terms, see the LICENSE file.
+//
 // The following iterative sequence is defined for the set of positive integers:
 // 
 // n → n/2 (n is even)

@@ -1,3 +1,6 @@
+// Copyright 2016 Peter Beard
+// Distributed under the GNU GPL v2. For full terms, see the LICENSE file.
+//
 // A Pythagorean triplet is a set of three natural numbers, a < b < c, for which,
 // a2 + b2 = c2
 // 
