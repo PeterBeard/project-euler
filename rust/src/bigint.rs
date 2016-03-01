@@ -50,6 +50,11 @@ impl BigInt {
         bigint
     }
 
+    /// Get the number of digits in the number
+    pub fn num_digits(&self) -> u32 {
+        self.digits.len() as u32
+    }
+
     /// Remove leading zeros
     pub fn strip_zeros(&mut self) {
         while self.digits.len() > 1 && self.digits[self.digits.len() - 1] == 0 {
