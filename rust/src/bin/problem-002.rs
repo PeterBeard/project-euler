@@ -10,16 +10,12 @@
 // exceed four million, find the sum of the even-valued terms.
 
 fn main() {
-    let (mut a, mut b) = (1, 2);
+    let (mut a, mut b, mut c) = (1, 2, 3);
     let mut sum = 2;
-    loop {
-        let c = a + b;
+    while c <= 4000000 {
+        c = a + b;
         a = b;
         b = c;
-        
-        if c > 4000000 {
-            break;
-        }
 
         if c % 2 == 0 {
             sum += c;
