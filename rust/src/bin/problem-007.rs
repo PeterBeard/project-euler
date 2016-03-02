@@ -9,11 +9,11 @@ extern crate euler_util;
 use euler_util::is_prime;
 
 fn main() {
-    let mut primes_seen = 0;
-    let mut n = 1;
+    let mut primes_seen = 2;
+    let mut n = 3;
 
     while primes_seen < 10001 {
-        n += 1;
+        n += 2;
         if is_prime(n) {
             primes_seen += 1;
         }
