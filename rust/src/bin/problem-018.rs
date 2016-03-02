@@ -35,56 +35,30 @@
 // and requires a clever method! ;o)
 
 /// Find the maximum path from the start node to an end node
-fn maximum_path(graph: &Vec<Vec<u8>>) -> Vec<u8> {
-    let mut path: Vec<u8> = Vec::new();
+fn maximum_path_sum(graph: &[Vec<u32>]) -> u32 {
     let mut sums: Vec<Vec<u32>> = Vec::new();
-    sums.push(vec!(graph[0][0] as u32));
+    sums.extend(graph.iter().cloned());
     
     // Calculate the sum of each value and its largest neighbor
-    // The maximum path is the path between the largest sums in each row
-    for y in 1..graph.len() {
-        let mut sum_row: Vec<u32> = Vec::new();
+    // If we replace each value with that sum, then whatever value is left at
+    // the top of the tree will be the sum of the largest path since the large
+    // values will propagate up through the tree.
+    for y in (0..graph.len() - 1).rev() {
         for x in 0..graph[y].len() {
-            let value = graph[y][x] as u32;
-            if x == 0 {
-                // Only up
-                sum_row.push(sums[y-1][x] + value);
-            } else if x == graph[y].len() - 1 {
-                // Only left
-                sum_row.push(sums[y-1][x-1] + value);
-            } else {
-                // Neighbors up and left, pick the bigger one
-                let n_up = sums[y-1][x];
-                let n_left = sums[y-1][x-1];
-                if n_up > n_left {
-                    sum_row.push(n_up + value);
-                } else {
-                    sum_row.push(n_left + value);
-                }
-            }
+            let value = graph[y][x];
+            // Neighbors down and right, pick the bigger one
+            let n_down = sums[y+1][x];
+            let n_right = sums[y+1][x+1];
+            sums[y][x] = if n_down > n_right { n_down + value } else { n_right + value };
         }
-        sums.push(sum_row);
     }
-
-    // The maximum path passes through the maximum value in each row
-    for y in 0..graph.len() {
-        let mut max_val = 0;
-        let mut max_sum = 0;
-        for x in 0..graph[y].len() {
-            if sums[y][x] > max_sum {
-                max_val = graph[y][x];
-                max_sum = sums[y][x];
-            }
-        }
-        path.push(max_val);
-    }
-    path
+    // Return the top of the tree
+    sums[0][0]
 }
 
 fn main() {
     // Build the graph
-    let mut graph: Vec<Vec<u8>> = Vec::new();
-    /*
+    let mut graph: Vec<Vec<u32>> = Vec::new();
     graph.push(vec![75]);
     graph.push(vec![95, 64]);
     graph.push(vec![17, 47, 82]);
@@ -100,27 +74,7 @@ fn main() {
     graph.push(vec![91, 71, 52, 38, 17, 14, 91, 43, 58, 50, 27, 29, 48]);
     graph.push(vec![63, 66, 04, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31]);
     graph.push(vec![04, 62, 98, 27, 23, 09, 70, 98, 73, 93, 38, 53, 60, 04, 23]);
-    */
-    graph.push(vec![3]);
-    graph.push(vec![7, 4]);
-    graph.push(vec![2, 4, 6]);
-    graph.push(vec![8, 5, 9, 3]);
 
-    let path = maximum_path(&graph);
-    let mut path_sum = 0;
-
-    // Show the maximum path
-    for i in 0..path.len() {
-        if i < path.len() - 1 {
-            print!("{} -> ", path[i]);
-        } else {
-            print!("{}\n", path[i]);
-        }
-    }
-
-    // Calculate the sum
-    for v in path {
-        path_sum += v as u32;
-    }
+    let path_sum = maximum_path_sum(&graph[..]);
     println!("The sum of the maximum path is {}", path_sum);
 }
