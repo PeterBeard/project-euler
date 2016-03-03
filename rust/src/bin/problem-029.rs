@@ -21,7 +21,7 @@ fn main() {
 
     for a in 2..101 {
         let mut value = BigInt::from_u32(a);
-        for b in 2..101 {
+        for _ in 2..101 {
             value = value.mul_u32(a);
             results.push(value.clone());
         }
