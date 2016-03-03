@@ -2,10 +2,11 @@
 // Distributed under the GNU GPL v2. For full terms, see the LICENSE file.
 //
 // Library for doing arithmetic with large integers
+use std::cmp::{Ord, Ordering};
 
 /// A big integer. Digits are stored little-endian, i.e. the least significant digit is at
 /// digits[0]. BigInts are unsigned and have no upper bound other than available memory.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd)]
 pub struct BigInt {
     digits: Vec<u8>
 }
@@ -154,6 +155,16 @@ impl BigInt {
         product
     }
 
+    /// Multiply a BigInt by a u32
+    pub fn mul_u32(&self, other: u32) -> BigInt {
+        self.mul(&BigInt::from_u32(other))
+    }
+
+    /// Multiply a BigInt by a u64
+    pub fn mul_u64(&self, other: u64) -> BigInt {
+        self.mul(&BigInt::from_u64(other))
+    }
+
     /// Calculate n! for a BigInt
     pub fn fact(self) -> BigInt {
         let one = BigInt::from_u32(1);
@@ -164,6 +175,26 @@ impl BigInt {
             product = product.mul(&value);
         }
         product
+    }
+}
+
+impl Ord for BigInt {
+    fn cmp(&self, other: &BigInt) -> Ordering {
+        // More digits is always bigger
+        if self.digits.len() > other.digits.len() {
+            return Ordering::Greater;
+        } else if self.digits.len() < other.digits.len() {
+            return Ordering::Less;
+        }
+        // Otherwise, compare the digits
+        for i in 0..self.digits.len() {
+            if self.digits[i] > other.digits[i] {
+                return Ordering::Greater;
+            } else if self.digits[i] < other.digits[i] {
+                return Ordering::Less;
+            }
+        }
+        Ordering::Equal
     }
 }
 
