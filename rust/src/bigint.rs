@@ -3,6 +3,7 @@
 //
 // Library for doing arithmetic with large integers
 use std::cmp::{Ord, Ordering};
+use std::fmt;
 
 /// A big integer. Digits are stored little-endian, i.e. the least significant digit is at
 /// digits[0]. BigInts are unsigned and have no upper bound other than available memory.
@@ -198,6 +199,16 @@ impl Ord for BigInt {
     }
 }
 
+impl fmt::Display for BigInt {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let mut digit_string = String::new();
+        for i in (0..self.digits.len()).rev() {
+            digit_string.push_str(&format!("{}", self.digits[i]));
+        }
+        write!(f, "{}", digit_string)
+    }
+}
+
 /// Add the digits in a BigInt
 pub fn sum_of_digits(n: &BigInt) -> u32 {
     let mut sum = 0;
@@ -241,4 +252,11 @@ fn test_fact() {
     let b = BigInt::from_u64(2432902008176640000);
 
     assert_eq!(b, a.fact());
+}
+
+#[test]
+fn test_string() {
+    let a = BigInt::from_u32(1234567890);
+
+    assert_eq!("1234567890", format!("{}", a));
 }
