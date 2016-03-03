@@ -15,6 +15,9 @@
 // 
 // How many Sundays fell on the first of the month during the twentieth century
 // (1 Jan 1901 to 31 Dec 2000)?
+#![feature(test)]
+extern crate test;
+
 use std::fmt;
 
 /// The days of the week
@@ -81,7 +84,7 @@ fn get_day_of_week(day: Date) -> Day {
     }
 }
 
-fn main() {
+pub fn solution() -> u32 {
     let start_date = Date { day: 1, month: 1, year: 1901 };
     let end_date = Date { day: 31, month: 12, year: 2000 };
     let mut count = 0;
@@ -93,5 +96,25 @@ fn main() {
             }
         }
     }
-    println!("{} Sundays occur on the first of the month between {} and {}", count, start_date, end_date);
+    count
+}
+
+fn main() {
+    println!("{} Sundays occur on the first of the month between Jan 1, 1901 and Dec 31, 2000", solution());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(171, solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }

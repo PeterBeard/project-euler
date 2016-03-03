@@ -11,6 +11,9 @@
 // would obtain a score of 938 × 53 = 49714.
 // 
 // What is the total of all the name scores in the file?
+#![feature(test)]
+extern crate test;
+
 use std::io::prelude::*;
 use std::io::BufReader;
 use std::fs::File;
@@ -26,8 +29,8 @@ fn score(name: &str) -> u32 {
     s
 }
 
-fn main() {
-    let f = match File::open("../../../data/p022_names.txt") {
+pub fn solution(data_file: &str) -> u32 {
+    let f = match File::open(data_file) {
         Ok(file) => file,
         Err(e) => panic!("Failed to read file: {}", e)
     };
@@ -47,6 +50,27 @@ fn main() {
     for i in 0..scores.len() {
         sum += scores[i] * (i as u32 + 1);
     }
+    sum
+}
 
-    println!("The sum of the scores of the alphabetized names is {}", sum);
+fn main() {
+    println!("The sum of the scores of the alphabetized names is {}",
+             solution("../../../data/p022_names.txt")
+    );
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(871198282, solution("../data/p022_names.txt"));
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution("../data/p022_names.txt"));
+    }
 }

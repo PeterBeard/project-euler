@@ -10,6 +10,8 @@
 // NOTE: Do not count spaces or hyphens. For example, 342 (three hundred and
 // forty-two) contains 23 letters and 115 (one hundred and fifteen) contains
 // 20 letters. The use of "and" when writing out numbers is in compliance with British usage.
+#![feature(test)]
+extern crate test;
 
 /// Get the English word for a particular number in [1, 1000]
 fn number_as_word(n: u32) -> String {
@@ -50,11 +52,31 @@ fn number_as_word(n: u32) -> String {
     }
 }
 
-fn main() {
+pub fn solution() -> u32 {
     let mut char_count = 0;
     for n in 1..1001 {
         // Get the word and strip out hyphens and spaces
         char_count += number_as_word(n).replace("-", "").replace(" ", "").len();
     }
-    println!("Written out, the numbers from 1 to 1000 have {} non-whitespace characters.", char_count);
+    char_count as u32
+}
+
+fn main() {
+    println!("Written out, the numbers from 1 to 1000 have {} non-whitespace characters.", solution());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(21124, solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }

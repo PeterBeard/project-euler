@@ -5,6 +5,8 @@
 // from the product of two 2-digit numbers is 9009 = 91 × 99.
 //
 // Find the largest palindrome made from the product of two 3-digit numbers.
+#![feature(test)]
+extern crate test;
 
 // Determine whether n is a palindrome
 fn is_palindrome(n: i32) -> bool {
@@ -30,23 +32,35 @@ fn is_palindrome(n: i32) -> bool {
     n == reverse_n
 }
 
-fn main() {
+pub fn solution() -> i32 {
     let mut largest = 0;
-    let mut max_m = 0;
-    let mut max_n = 0;
     for n in 100..1000 {
         for m in 100..1000 {
             let product = n*m;
             if product > largest && is_palindrome(product) {
                 largest = product;
-                max_m = m;
-                max_n = n;
             }
         }
     }
-    println!("The largest palindrome product of two three-digit numbers is {} ({} * {})",
-        largest,
-        max_n,
-        max_m
-    );
+    largest
+}
+
+fn main() {
+    println!("The largest palindrome product of two three-digit numbers is {}", solution());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(906609, solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }

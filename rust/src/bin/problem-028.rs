@@ -13,8 +13,10 @@
 // It can be verified that the sum of the numbers on the diagonals is 101.
 // 
 // What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed in the same way?
+#![feature(test)]
+extern crate test;
 
-fn main() {
+pub fn solution() -> u32 {
     // An m by m grid will have (m - 1)/2 rings, each of which has (2n + 1)^2
     // in the top-left corner. The other corners are 2n, 4n, and 6n behind.
     // These are the diagonals
@@ -28,5 +30,25 @@ fn main() {
         sum += square - 4*n;
         sum += square - 6*n;
     }
-    println!("The sum of the diagonals of a {} by {} spiral is {}", m, m, sum);
+    sum
+}
+
+fn main() {
+    println!("The sum of the diagonals of a 1001x1001 spiral is {}", solution());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(669171001, solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }

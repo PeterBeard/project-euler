@@ -16,6 +16,8 @@
 // Which starting number, under one million, produces the longest chain?
 // 
 // NOTE: Once the chain starts the terms are allowed to go above one million.
+#![feature(test)]
+extern crate test;
 
 /// Get the length of the Collatz sequence for n
 fn collatz_length(n: u64) -> u64 {
@@ -35,7 +37,7 @@ fn collatz_length(n: u64) -> u64 {
     length
 }
 
-fn main() {
+pub fn solution() -> u64 {
     let mut max_length = 0;
     let mut max_length_n = 0;
 
@@ -46,5 +48,25 @@ fn main() {
             max_length_n = n;
         }
     }
-    println!("Longest started with {} (length {})", max_length_n, max_length)
+    max_length_n
+}
+
+fn main() {
+    println!("The longest Collatz sequence starts with {}", solution())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(837799, solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }

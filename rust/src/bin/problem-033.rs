@@ -12,6 +12,8 @@
 // 
 // If the product of these four fractions is given in its lowest common terms, find the value of
 // the denominator.
+#![feature(test)]
+extern crate test;
 
 /// Reduce a fraction to lowest common terms
 fn reduce_fraction(n: u32, d: u32) -> (u32, u32) {
@@ -32,7 +34,7 @@ fn reduce_fraction(n: u32, d: u32) -> (u32, u32) {
     (r_n, r_d)
 }
 
-fn main() {
+pub fn solution() -> u32 {
     let mut n_product = 1f32;
     let mut d_product = 1f32;
     for numerator in 1..10 {
@@ -62,5 +64,25 @@ fn main() {
         }
     }
     let (_, d) = reduce_fraction(n_product as u32, d_product as u32);
-    println!("The denominator of the product of the fractions is {}", d);
+    d
+}
+
+fn main() {
+    println!("The denominator of the product of the fractions is {}", solution());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(100, solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }

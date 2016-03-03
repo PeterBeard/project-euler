@@ -19,6 +19,8 @@
 // 
 // Find the value of d < 1000 for which 1/d contains the longest recurring
 // cycle in its decimal fraction part.
+#![feature(test)]
+extern crate test;
 
 /// Find the length of the repetend of 1/d in decimal
 fn repeating_length(d: u32) -> u32 {
@@ -47,7 +49,7 @@ fn repeating_length(d: u32) -> u32 {
     }
 }
 
-fn main() {
+pub fn solution() -> u32{
     let mut max = 0;
     let mut max_d = 0;
     for d in 1..1000 {
@@ -57,5 +59,25 @@ fn main() {
             max_d = d;
         }
     }
-    println!("{} has the longest repetend for d < 1000.", max_d);
+    max_d
+}
+
+fn main() {
+    println!("1/{} has the longest repetend for d < 1000.", solution());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(983, solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }

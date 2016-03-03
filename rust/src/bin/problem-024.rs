@@ -10,6 +10,8 @@
 // 
 // What is the millionth lexicographic permutation of the digits 0, 1, 2, 3, 4,
 // 5, 6, 7, 8 and 9?
+#![feature(test)]
+extern crate test;
 
 /// Find the next lexicographic permutation of a set of digits
 fn next_permutation(digits: &[u32]) -> Vec<u32> {
@@ -36,16 +38,36 @@ fn next_permutation(digits: &[u32]) -> Vec<u32> {
     next
 }
 
-fn main() {
+pub fn solution() -> Vec<u32> {
     // Permute the digits 0-9 a million times
     let mut digits: Vec<u32> = vec![0,1,2,3,4,5,6,7,8,9];
     for _ in 1..1000000 {
         digits = next_permutation(&digits[..]);
     }
+    digits
+}
 
+fn main() {
+    let digits = solution();
     print!("The 1,000,000th permutation is ");
     for d in &digits {
         print!("{}", d);
     }
     print!("\n");
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(vec![2,7,8,3,9,1,5,4,6,0], solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }

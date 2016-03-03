@@ -6,6 +6,8 @@
 // Find the sum of all numbers which are equal to the sum of the factorial of their digits.
 // 
 // Note: as 1! = 1 and 2! = 2 are not sums they are not included.
+#![feature(test)]
+extern crate test;
 extern crate euler_util;
 use euler_util::get_digits;
 
@@ -24,12 +26,32 @@ fn sum_of_digits_factorial(n: u32) -> u32 {
     digits.iter().fold(0, |s, d| s + factorial(d.clone()))
 }
 
-fn main() {
+pub fn solution() -> u32 {
     let mut sum = 0;
     for n in 10..factorial(9) {
         if sum_of_digits_factorial(n) == n {
             sum += n;
         }
     }
-    println!("The sum of all \"curious\" numbers is {}", sum);
+    sum
+}
+
+fn main() {
+    println!("The sum of all \"curious\" numbers is {}", solution());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(40730, solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }

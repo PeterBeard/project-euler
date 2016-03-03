@@ -12,8 +12,10 @@
 // 
 // Find the difference between the sum of the squares of the first one
 // hundred natural numbers and the square of the sum.
+#![feature(test)]
+extern crate test;
 
-fn main() {
+pub fn solution() -> i32 {
     let mut sum_squares:i32 = 0;
     let mut sum:i32 = 0;
     
@@ -21,5 +23,25 @@ fn main() {
         sum += i;
         sum_squares += i*i;
     }
-    println!("The difference is {}", (sum_squares - sum*sum).abs());
+    (sum_squares - sum*sum).abs()
+}
+
+fn main() {
+    println!("The difference is {}", solution());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(25164150, solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }

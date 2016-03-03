@@ -4,6 +4,8 @@
 // 2^15 = 32768 and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.
 //
 // What is the sum of the digits of the number 2^1000?
+#![feature(test)]
+extern crate test;
 
 /// Calculate a very large exponent
 ///
@@ -46,7 +48,27 @@ fn sum_of_digits(digits: Vec<u8>) -> u32 {
     sum
 }
 
-fn main() {
+pub fn solution() -> u32 {
     let digits = large_pow(2, 1000);
-    println!("The sum of the digits of 2^1000 is {}", sum_of_digits(digits));
+    sum_of_digits(digits)
+}
+
+fn main() {
+    println!("The sum of the digits of 2^1000 is {}", solution());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(1366, solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }

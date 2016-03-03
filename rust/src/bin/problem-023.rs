@@ -19,10 +19,12 @@
 // 
 // Find the sum of all the positive integers which cannot be written as the sum
 // of two abundant numbers.
+#![feature(test)]
+extern crate test;
 extern crate euler_util;
 use euler_util::sum_of_divisors;
 
-fn main() {
+pub fn solution() -> u32 {
     let mut is_abundant: Vec<bool> = vec![false; 20162];
     for n in 12..is_abundant.len() {
         if sum_of_divisors(n as u32) > n as u32 {
@@ -46,6 +48,25 @@ fn main() {
             sum += n;
         }
     }
+    sum as u32
+}
 
-    println!("The sum of all positive integers that cannot be expressed as the sum of two abundant numbers is {}", sum);
+fn main() {
+    println!("The sum of all positive integers that cannot be expressed as the sum of two abundant numbers is {}", solution());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(4179871, solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }

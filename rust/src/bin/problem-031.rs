@@ -12,8 +12,10 @@
 // 
 // How many different ways can £2 be made using any number of coins?
 //
+#![feature(test)]
+extern crate test;
 
-fn main() {
+pub fn solution() -> u32 {
     // Values of coins in pence
     const POUND: u32 = 100;
     const FIFTY_P: u32 = 50;
@@ -57,5 +59,25 @@ fn main() {
             }
         }
     }
-    println!("There are {} ways to make £2", count);
+    count
+}
+
+fn main() {
+    println!("There are {} ways to make £2", solution());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(73682, solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }

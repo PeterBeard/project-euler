@@ -23,10 +23,12 @@
 // The 12th term, F12, is the first term to contain three digits.
 // 
 // What is the index of the first term in the Fibonacci sequence to contain 1000 digits?
+#![feature(test)]
+extern crate test;
 extern crate euler_util;
 use euler_util::bigint::BigInt;
 
-fn main() {
+pub fn solution() -> u32 {
     let mut a = BigInt::from_u32(1);
     let mut b = BigInt::from_u32(1);
     let mut c = BigInt::new();
@@ -38,6 +40,25 @@ fn main() {
         b = c.clone();
         index += 1;
     }
+    index as u32
+}
 
-    println!("The first Fibonacci number with 1000 digits is number {}.", index);
+fn main() {
+    println!("The first Fibonacci number with 1000 digits is number {}.", solution());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(4782, solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }

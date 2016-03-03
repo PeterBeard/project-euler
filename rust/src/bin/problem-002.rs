@@ -8,8 +8,10 @@
 // 
 // By considering the terms in the Fibonacci sequence whose values do not
 // exceed four million, find the sum of the even-valued terms.
+#![feature(test)]
+extern crate test;
 
-fn main() {
+pub fn solution() -> u32 {
     let (mut a, mut b, mut c) = (1, 2, 3);
     let mut sum = 2;
     while c <= 4000000 {
@@ -21,5 +23,25 @@ fn main() {
             sum += c;
         }
     }
-    println!("The sum is {}", sum);
+    sum
+}
+
+fn main() {
+    println!("The sum of the Fibonacci numbers < 4,000,000 is {}", solution());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(4613732, solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }

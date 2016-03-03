@@ -11,10 +11,13 @@
 // 71 and 142; so sum_of_divisors(284) = 220.
 // 
 // Evaluate the sum of all the amicable numbers under 10000.
+#![feature(test)]
+extern crate test;
+
 extern crate euler_util;
 use euler_util::sum_of_divisors;
 
-fn main() {
+pub fn solution() -> u32 {
     let search_limit = 10000;
     let mut sum = 0;
     for n in 220..search_limit {
@@ -30,6 +33,25 @@ fn main() {
             }
         }
     }
+    sum
+}
 
-    println!("The sum of all amicable numbers under 10000 is {}", sum);
+fn main() {
+    println!("The sum of all amicable numbers under 10000 is {}", solution());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(31626, solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }

@@ -5,10 +5,13 @@
 // see that the 6th prime is 13.
 // 
 // What is the 10 001st prime number?
+#![feature(test)]
+extern crate test;
+
 extern crate euler_util;
 use euler_util::is_prime;
 
-fn main() {
+pub fn solution() -> i64 {
     let mut primes_seen = 2;
     let mut n = 3;
 
@@ -18,5 +21,25 @@ fn main() {
             primes_seen += 1;
         }
     }
-    println!("The 10,001st prime is {}", n);
+    n
+}
+
+fn main() {
+    println!("The 10,001st prime is {}", solution());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(104743, solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }

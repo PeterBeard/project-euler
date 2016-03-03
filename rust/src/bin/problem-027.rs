@@ -24,7 +24,8 @@
 // Find the product of the coefficients, a and b, for the quadratic expression
 // that produces the maximum number of primes for consecutive values of n,
 // starting with n = 0.
-
+#![feature(test)]
+extern crate test;
 extern crate euler_util;
 use euler_util::is_prime;
 
@@ -44,7 +45,7 @@ fn consecutive_primes(a: i32, b: i32) -> i32 {
     }
 }
 
-fn main() {
+pub fn solution() -> i32 {
     let mut max_a = 0;
     let mut max_b = 0;
     let mut max_primes = 0;
@@ -59,5 +60,25 @@ fn main() {
             }
         }
     }
-    println!("The product of the coefficients that produce the maximum number of primes is {}", max_a*max_b);
+    max_a * max_b
+}
+
+fn main() {
+    println!("The product of the coefficients that produce the maximum number of primes is {}", solution());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(-59231, solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }

@@ -14,6 +14,8 @@
 // 
 // Find the sum of all the numbers that can be written as the sum of fifth
 // powers of their digits.
+#![feature(test)]
+extern crate test;
 
 /// Calculate the sum of the fifth powers of the digits of n
 fn sum_of_digits_5(n: u32) -> u32 {
@@ -27,12 +29,34 @@ fn sum_of_digits_5(n: u32) -> u32 {
     sum
 }
 
-fn main() {
+pub fn solution() -> u32 {
     let mut sum = 0;
     for n in 2..5*9u32.pow(5) {
         if n == sum_of_digits_5(n) {
             sum += n;
         }
     }
-    println!("The sum of all numbers that can be written as the sum of the 5th powers of their digits is {}", sum);
+    sum
+}
+
+fn main() {
+    println!("The sum of all numbers that can be written as the sum of the 5th powers of their digits is {}",
+             solution()
+    );
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(443839, solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }

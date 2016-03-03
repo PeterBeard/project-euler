@@ -7,11 +7,33 @@
 // and the sum of the digits in the number 10! is 3 + 6 + 2 + 8 + 8 + 0 + 0 = 27.
 // 
 // Find the sum of the digits in the number 100!
+#![feature(test)]
+extern crate test;
+
 extern crate euler_util;
 use euler_util::bigint::{BigInt, sum_of_digits};
 
-fn main() {
-    let value = BigInt::from_u32(100);
+pub fn solution() -> u32 {
+    sum_of_digits(&BigInt::from_u32(100).fact())
 
-    println!("The sum of the digits of 100! is {}", sum_of_digits(&value.fact()));
+}
+
+fn main() {
+    println!("The sum of the digits of 100! is {}", solution());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(648, solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }

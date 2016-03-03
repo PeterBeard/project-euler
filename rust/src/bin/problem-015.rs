@@ -5,6 +5,9 @@
 // the right and down, there are exactly 6 routes to the bottom right corner.
 //
 // How many such routes are there through a 20×20 grid?
+#![feature(test)]
+extern crate test;
+
 use std::fmt;
 
 /// Unsigned 2-d point
@@ -38,12 +41,30 @@ fn binomial_coefficient(n: u64, k: u64) -> u64 {
 /// The number of lattice paths from (0, 0) to (n, k) is
 /// the binomial coefficient (n + k n)
 fn routes_to_point(p: &Point) -> u64 {
-    println!("Calculting {} C {}", p.x+p.y, p.y);
     binomial_coefficient((p.x + p.y), p.x)
 }
 
-fn main() {
+pub fn solution() -> u64 {
     let goal = Point { x: 20, y: 20 };
+    routes_to_point(&goal)
+}
 
-    println!("There are {} routes from (0, 0) to {}", routes_to_point(&goal), goal);
+fn main() {
+    println!("There are {} routes through a 20x20 grid", solution());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(137846528820, solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }

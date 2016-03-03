@@ -18,6 +18,8 @@
 // We can see that 28 is the first triangle number to have over five divisors.
 // 
 // What is the value of the first triangle number to have over five hundred divisors?
+#![feature(test)]
+extern crate test;
 
 /// Get the nth triangle number
 fn nth_triangle_num(n: u32) -> u32 {
@@ -38,13 +40,32 @@ fn num_divisors(n: u32) -> u32 {
     count
 }
 
-fn main() {
+pub fn solution() -> u32 {
     let mut n = 7; // We know the answer is after the 7th triangle number
     loop {
         if num_divisors(nth_triangle_num(n)) > 500 {
-            break;
+            return nth_triangle_num(n);
         }
         n += 1;
     }
-    println!("The first triangle number with > 500 divisors is {}", nth_triangle_num(n));
+}
+
+fn main() {
+    println!("The first triangle number with > 500 divisors is {}", solution());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(76576500, solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }

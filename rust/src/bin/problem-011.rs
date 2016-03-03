@@ -28,13 +28,15 @@
 // 
 // What is the greatest product of four adjacent numbers in the same direction
 // (up, down, left, right, or diagonally) in the 20×20 grid?
+#![feature(test)]
+extern crate test;
 
 // Convert 2-d coordinates to a 1-d index
 fn c2i(x: u32, y:u32, width: u32) -> usize {
     (y*width + x) as usize
 }
 
-fn main() {
+pub fn solution() -> u32 {
     // Grid dimensions and values
     const GRID_X:u32 = 20;
     const GRID_Y:u32 = 20;
@@ -117,5 +119,25 @@ fn main() {
             }
         }
     }
-    println!("Maximum product: {}", max_prod);
+    max_prod
+}
+
+fn main() {
+    println!("Maximum product: {}", solution());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(70600674, solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }

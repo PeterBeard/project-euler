@@ -3,8 +3,10 @@
 //
 // Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.
 // ..
+#![feature(test)]
+extern crate test;
 
-fn main() {
+pub fn solution() -> u64 {
     // The sum should be on the order of 10^52, so we can lose the last 40
     // or so digits without affecting the first 10
     const VALUES: [u64; 100] = [
@@ -119,5 +121,25 @@ fn main() {
     while sum > 10f64.powi(10) as u64 {
         sum = (sum as f64 / 10f64).round() as u64;
     }
-    println!("The first 10 digits of the sum are {}", sum);
+    sum
+}
+
+fn main() {
+    println!("The first 10 digits of the sum are {}", solution());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(5537376230, solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }

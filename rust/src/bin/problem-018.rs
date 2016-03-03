@@ -33,6 +33,8 @@
 // by trying every route. However, Problem 67, is the same challenge with a
 // triangle containing one-hundred rows; it cannot be solved by brute force,
 // and requires a clever method! ;o)
+#![feature(test)]
+extern crate test;
 
 /// Find the maximum path from the start node to an end node
 fn maximum_path_sum(graph: &[Vec<u32>]) -> u32 {
@@ -56,7 +58,7 @@ fn maximum_path_sum(graph: &[Vec<u32>]) -> u32 {
     sums[0][0]
 }
 
-fn main() {
+pub fn solution() -> u32 {
     // Build the graph
     let mut graph: Vec<Vec<u32>> = Vec::new();
     graph.push(vec![75]);
@@ -75,6 +77,25 @@ fn main() {
     graph.push(vec![63, 66, 04, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31]);
     graph.push(vec![04, 62, 98, 27, 23, 09, 70, 98, 73, 93, 38, 53, 60, 04, 23]);
 
-    let path_sum = maximum_path_sum(&graph[..]);
-    println!("The sum of the maximum path is {}", path_sum);
+    maximum_path_sum(&graph[..])
+}
+
+fn main() {
+    println!("The sum of the maximum path is {}", solution());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(1074, solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }

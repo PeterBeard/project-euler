@@ -13,6 +13,8 @@
 //
 // HINT: Some products can be obtained in more than one way so be sure to only
 // include it once in your sum.
+#![feature(test)]
+extern crate test;
 
 /// Determine whether the product a * b = c is pandigital
 fn is_pandigital_product(a: u32, b: u32) -> bool {
@@ -60,7 +62,7 @@ fn is_pandigital_product(a: u32, b: u32) -> bool {
     true
 }
 
-fn main() {
+pub fn solution() -> u32 {
     let mut products: Vec<u32> = Vec::new();
 
     // 4999 is a good upper bound since it's the largest integer that results in
@@ -76,7 +78,25 @@ fn main() {
     // Only count each product once
     products.sort();
     products.dedup();
-    let sum = products.iter().fold(0, |s, v| s + v);
+    products.iter().fold(0, |s, v| s + v)
+}
 
-    println!("The sum of all pandigital products is {}", sum);
+fn main() {
+    println!("The sum of all pandigital products is {}", solution());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[test]
+    fn correct() {
+        assert_eq!(45228, solution());
+    }
+
+    #[bench]
+    fn bench(b: &mut Bencher) {
+        b.iter(|| solution());
+    }
 }
