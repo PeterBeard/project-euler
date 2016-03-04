@@ -10,6 +10,11 @@ extern crate test;
 
 // Determine whether n is a palindrome
 fn is_palindrome(n: i32) -> bool {
+    // Multiples of 10 can't be palindromes
+    if n % 10 == 0 {
+        return false;
+    }
+
     let mut den = 1;
     let mut digits = Vec::with_capacity(6);
     while den < n {
