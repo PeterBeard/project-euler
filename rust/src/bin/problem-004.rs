@@ -10,26 +10,19 @@ extern crate test;
 
 // Determine whether n is a palindrome
 fn is_palindrome(n: i32) -> bool {
-    let n_digits = (n as f32).log10() as i32;
-    // Numbers divisible by a power of 10 can't be palindromes
-    for i in 1..n_digits+1 {
-        if n % (10f32.powi(i) as i32) == 0 {
+    let mut den = 1;
+    let mut digits = Vec::with_capacity(6);
+    while den < n {
+        digits.push((n/den) % 10);
+        den *= 10;
+    }
+
+    for i in 0..digits.len() {
+        if digits[i] != digits[digits.len() - i - 1] {
             return false;
         }
     }
-    // Reverse the digits of the number
-    let mut reverse_n = 0;
-    let mut shrinking_n = n;
-    for i in (0..n_digits+1).rev() {
-        let place_value = 10f32.powi(i) as i32;
-        while shrinking_n >= place_value {
-            shrinking_n -= place_value;
-            reverse_n += 10f32.powi(n_digits - i) as i32;
-        }
-    }
-
-    // n is a palindrome if it's the same backwards as forwards
-    n == reverse_n
+    true
 }
 
 pub fn solution() -> i32 {
