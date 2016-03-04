@@ -54,10 +54,40 @@ pub fn get_digits(n: u32) -> Vec<u32> {
     digits
 }
 
+/// Count the number of digits in a number
+pub fn count_digits(n: u32) -> u32 {
+    // This is about 10x faster than calculating log10(n)
+    let mut count = 0;
+    let mut step = 1;
+    while step <= n {
+        count += 1;
+        step *= 10;
+    }
+    count
+}
+
+/// Find all of the prime numbers in [0, n)
+pub fn primes_upto(n: u32) -> Vec<bool> {
+    let mut primes: Vec<bool> = vec![true; n as usize];
+    primes[0] = false;
+    primes[1] = false;
+    for p in 2..n {
+        if primes[p as usize] {
+            // If n is prime, all multiples of n are composite
+            let mut q = 2*p;
+            while q < n {
+                primes[q as usize] = false;
+                q += p;
+            }
+        }
+    }
+    primes
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
-    use test::Bencher;
+    use test::{Bencher, black_box};
 
     #[test]
     fn is_2_prime() {
@@ -102,8 +132,31 @@ mod tests {
         assert_eq!(digits, get_digits(n));
     }
 
+    #[test]
+    fn test_count_digits() {
+        assert_eq!(2, count_digits(10));
+        assert_eq!(5, count_digits(12345));
+    }
+
+    #[test]
+    fn test_primes_upto() {
+        let primes = vec![false, false, true, true, false, true, false, true, false, false];
+        assert_eq!(primes, primes_upto(10));
+    }
+
     #[bench]
     fn bench_get_digits(b: &mut Bencher) {
         b.iter(|| get_digits(12345));
+    }
+
+    #[bench]
+    fn bench_count_digits(b: &mut Bencher) {
+        let n = black_box(12345);
+        b.iter(|| count_digits(n));
+    }
+
+    #[bench]
+    fn bench_primes_upto(b: &mut Bencher) {
+        b.iter(|| primes_upto(1000));
     }
 }
