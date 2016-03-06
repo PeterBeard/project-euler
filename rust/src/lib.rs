@@ -171,6 +171,18 @@ mod tests {
     }
 
     #[bench]
+    fn bench_is_prime_composite(b: &mut Bencher) {
+        let n = black_box(12346);
+        b.iter(|| is_prime(n));
+    }
+
+    #[bench]
+    fn bench_is_prime_prime(b: &mut Bencher) {
+        let n = black_box(12347);
+        b.iter(|| is_prime(n));
+    }
+
+    #[bench]
     fn bench_get_digits(b: &mut Bencher) {
         b.iter(|| get_digits(12345));
     }
@@ -183,11 +195,11 @@ mod tests {
 
     #[bench]
     fn bench_primes_upto(b: &mut Bencher) {
-        b.iter(|| primes_upto(1000));
+        b.iter(|| primes_upto(12345));
     }
 
     #[bench]
     fn bench_is_pandigital(b: &mut Bencher) {
-        b.iter(|| is_pandigital(123456789, 9));
+        b.iter(|| is_pandigital(12345, 5));
     }
 }
