@@ -84,6 +84,26 @@ pub fn primes_upto(n: u32) -> Vec<bool> {
     primes
 }
 
+/// Determine whether a number is 1..k pandigital
+pub fn is_pandigital(n: u32, k:u32) -> bool {
+    let mut digits: Vec<bool> = vec![false; (k + 1) as usize];
+    let mut value = 1;
+    for _ in 0..k {
+        let d = (n % (10*value))/value;
+        if d > k {
+            return false;
+        }
+        digits[d as usize] = true;
+        value *= 10;
+    }
+    for i in 1..(k + 1) {
+        if !digits[i as usize] {
+            return false;
+        }
+    }
+    !digits[0]
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -144,6 +164,12 @@ mod tests {
         assert_eq!(primes, primes_upto(10));
     }
 
+    #[test]
+    fn test_is_pandigital() {
+        assert_eq!(false, is_pandigital(12345678, 9));
+        assert!(is_pandigital(1234, 4));
+    }
+
     #[bench]
     fn bench_get_digits(b: &mut Bencher) {
         b.iter(|| get_digits(12345));
@@ -158,5 +184,10 @@ mod tests {
     #[bench]
     fn bench_primes_upto(b: &mut Bencher) {
         b.iter(|| primes_upto(1000));
+    }
+
+    #[bench]
+    fn bench_is_pandigital(b: &mut Bencher) {
+        b.iter(|| is_pandigital(123456789, 9));
     }
 }

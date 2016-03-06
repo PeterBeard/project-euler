@@ -19,6 +19,8 @@
 //
 #![feature(test)]
 extern crate test;
+extern crate euler_util;
+use euler_util::is_pandigital;
 
 /// Find a 9-digit number by multiplying n by (1, 2, ...)
 fn nine_d_multiple(k: u32) -> u32 {
@@ -40,27 +42,12 @@ fn nine_d_multiple(k: u32) -> u32 {
     product as u32
 }
 
-/// Determine whether a number is pandigital
-fn is_pandigital(n: u32) -> bool {
-    let mut digits: [bool; 10] = [false; 10];
-    for i in 0..9 {
-        let d = (n % (10u32.pow(i+1)))/(10u32.pow(i));
-        digits[d as usize] = true;
-    }
-    for i in 1..10 {
-        if !digits[i] {
-            return false;
-        }
-    }
-    !digits[0]
-}
-
 pub fn solution() -> u32 {
     let mut max_multiple = 0;
     // The answer has to be < 10,000 since 10000 * [1, 2] has more than 9 digits
     for n in 2..10000 {
         let max = nine_d_multiple(n);
-        if max > max_multiple && is_pandigital(max) {
+        if max > max_multiple && is_pandigital(max, 9) {
             max_multiple = max;
         }
     }
