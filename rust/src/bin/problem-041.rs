@@ -27,7 +27,7 @@ pub fn solution() -> u32 {
         }
 
         while p > 10u32.pow(n-1) {
-            if p > max && is_pandigital(p, n) && is_prime(p as i64) {
+            if p > max && is_pandigital(p, 1, n) && is_prime(p as i64) {
                 max = p;
                 break;
             }

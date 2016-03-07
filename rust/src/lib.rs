@@ -84,24 +84,35 @@ pub fn primes_upto(n: u32) -> Vec<bool> {
     primes
 }
 
-/// Determine whether a number is 1..k pandigital
-pub fn is_pandigital(n: u32, k:u32) -> bool {
+/// Determine whether a number is k..l pandigital
+pub fn is_pandigital(n: u32, l: u32, k: u32) -> bool {
+    if l == k || k < l {
+        return false;
+    }
     let mut digits: Vec<bool> = vec![false; (k + 1) as usize];
     let mut value = 1;
-    for _ in 0..k {
+    println!("{}", n);
+    for _ in l..(k + 1) {
         let d = (n % (10*value))/value;
+        println!("  {}", d);
         if d > k {
             return false;
         }
         digits[d as usize] = true;
         value *= 10;
     }
-    for i in 1..(k + 1) {
+    println!("{:#?}", digits);
+    for i in l..(k + 1) {
         if !digits[i as usize] {
             return false;
         }
     }
-    !digits[0]
+    for i in 0..l {
+        if digits[i as usize] {
+            return false;
+        }
+    }
+    true
 }
 
 #[cfg(test)]
@@ -166,8 +177,12 @@ mod tests {
 
     #[test]
     fn test_is_pandigital() {
-        assert_eq!(false, is_pandigital(12345678, 9));
-        assert!(is_pandigital(1234, 4));
+        assert_eq!(false, is_pandigital(12345678, 1, 9));
+        assert_eq!(false, is_pandigital(1234567890, 1, 9));
+        assert!(is_pandigital(1234, 1, 4));
+        assert!(is_pandigital(3456, 3, 6));
+        assert_eq!(false, is_pandigital(1234, 1, 1));
+        assert_eq!(false, is_pandigital(1234, 4, 1));
     }
 
     #[bench]
@@ -200,6 +215,6 @@ mod tests {
 
     #[bench]
     fn bench_is_pandigital(b: &mut Bencher) {
-        b.iter(|| is_pandigital(12345, 5));
+        b.iter(|| is_pandigital(12345, 1, 5));
     }
 }

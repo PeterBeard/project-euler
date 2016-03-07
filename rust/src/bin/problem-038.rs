@@ -47,7 +47,7 @@ pub fn solution() -> u32 {
     // The answer has to be < 10,000 since 10000 * [1, 2] has more than 9 digits
     for n in 2..10000 {
         let max = nine_d_multiple(n);
-        if max > max_multiple && is_pandigital(max, 9) {
+        if max > max_multiple && is_pandigital(max, 1, 9) {
             max_multiple = max;
         }
     }
