@@ -7,12 +7,21 @@ extern crate test;
 
 pub mod bigint;
 
+/// Determine whether a number is a triangular number
+pub fn is_triangular(p: u64) -> bool {
+    let n = (-1.0 + (1.0 + 8.0*(p as f64)).sqrt()) / 2.0;
+    n == n.floor() && n > 0.0
+}
+
 /// Determine whether a number is a pentagonal number
-///
-/// Applying the quadratic formula to the pentagonal number formula gives the
-/// equation used in this function (for positive n)
 pub fn is_pentagonal(p: u64) -> bool {
     let n = (1.0 + (1.0 + 24.0*(p as f64)).sqrt()) / 6.0;
+    n == n.floor()
+}
+
+/// Determine whether a number is a hexagonal number
+pub fn is_hexagonal(p: u64) -> bool {
+    let n = (1.0 + (1.0 + 8.0*(p as f64)).sqrt()) / 4.0;
     n == n.floor()
 }
 
@@ -192,11 +201,27 @@ mod tests {
     }
 
     #[test]
+    fn test_is_triangular() {
+        assert!(is_triangular(1));
+        assert!(is_triangular(10));
+        assert_eq!(false, is_triangular(11));
+        assert_eq!(false, is_triangular(0));
+    }
+
+    #[test]
     fn test_is_pentagonal() {
         assert!(is_pentagonal(1));
         assert!(is_pentagonal(12));
         assert_eq!(false, is_pentagonal(13));
         assert_eq!(false, is_pentagonal(0));
+    }
+
+    #[test]
+    fn test_is_hexagonal() {
+        assert!(is_hexagonal(1));
+        assert!(is_hexagonal(15));
+        assert_eq!(false, is_hexagonal(16));
+        assert_eq!(false, is_hexagonal(0));
     }
 
     #[bench]
