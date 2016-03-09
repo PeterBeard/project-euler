@@ -11,7 +11,7 @@
 #![feature(test)]
 extern crate test;
 extern crate euler_util;
-use euler_util::{count_digits, primes_upto};
+use euler_util::{count_digits, prime_sieve};
 
 /// Rotate the digits of a u32, e.g. 197 -> 719
 fn rotate_number(n: u32) -> u32 {
@@ -37,7 +37,7 @@ fn is_circular_prime(n: u32, primes: &[bool]) -> bool {
 }
 
 pub fn solution() -> u32 {
-    let primes = primes_upto(1000000);
+    let primes = prime_sieve(1000000);
     let mut count = 0;
     for n in 2..1000000 {
         if is_circular_prime(n, &primes) {

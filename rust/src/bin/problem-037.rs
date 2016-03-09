@@ -12,7 +12,7 @@
 #![feature(test)]
 extern crate test;
 extern crate euler_util;
-use euler_util::primes_upto;
+use euler_util::prime_sieve;
 
 /// Remove the leftmost digit from n
 fn truncate_l(n: u32) -> u32 {
@@ -49,7 +49,7 @@ fn is_truncatable_prime(n: u32, primes: &[bool]) -> bool {
 pub fn solution() -> u32 {
     // We won't find any truncatable primes higher than this 
     const P_MAX: u32 = 999983;
-    let primes = primes_upto(P_MAX);
+    let primes = prime_sieve(P_MAX);
     let mut sum = 0;
     // 23 is the first possible truncatable prime since 1 isn't
     // prime and neither are 20 or 22 and we don't count 2-7

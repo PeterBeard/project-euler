@@ -84,8 +84,8 @@ pub fn count_digits(n: u32) -> u32 {
     count
 }
 
-/// Find all of the prime numbers in [0, n)
-pub fn primes_upto(n: u32) -> Vec<bool> {
+/// Use the sieve of Eratosthenes to mark numbers as prime or composite in [0, n)
+pub fn prime_sieve(n: u32) -> Vec<bool> {
     let mut primes: Vec<bool> = vec![true; n as usize];
     primes[0] = false;
     primes[1] = false;
@@ -101,8 +101,20 @@ pub fn primes_upto(n: u32) -> Vec<bool> {
     }
     primes
 }
+/// Get a list of all the prime numbers in [0, n)
+pub fn primes_upto(n: u32) -> Vec<u32> {
+    let is_prime = prime_sieve(n+1);
+    // Use a linear approximation of Pi(n) to estimate the number of primes < n
+    let mut primes: Vec<u32> = Vec::with_capacity(((0.2f32 * (n as f32)) + 2.6f32) as usize);
+    for p in 2..n {
+        if is_prime[p as usize] {
+            primes.push(p);
+        }
+    }
+    primes
+}
 
-/// Determine whether a number is k..l pandigital
+/// Determine whether a number is l..k pandigital
 pub fn is_pandigital(n: u32, l: u32, k: u32) -> bool {
     if l == k || k < l {
         return false;
@@ -185,9 +197,15 @@ mod tests {
     }
 
     #[test]
-    fn test_primes_upto() {
+    fn test_prime_sieve() {
         let primes = vec![false, false, true, true, false, true, false, true, false, false];
-        assert_eq!(primes, primes_upto(10));
+        assert_eq!(primes, prime_sieve(10));
+    }
+
+    #[test]
+    fn test_primes_upto() {
+        let primes = vec![2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31];
+        assert_eq!(primes, primes_upto(32));
     }
 
     #[test]
@@ -248,6 +266,11 @@ mod tests {
     }
 
     #[bench]
+    fn bench_prime_sieve(b: &mut Bencher) {
+        b.iter(|| prime_sieve(12345));
+    }
+
+    #[bench]
     fn bench_primes_upto(b: &mut Bencher) {
         b.iter(|| primes_upto(12345));
     }
@@ -259,6 +282,7 @@ mod tests {
 
     #[bench]
     fn bench_is_pentagonal(b: &mut Bencher) {
-        b.iter(|| is_pentagonal(12345));
+        let n = black_box(12345);
+        b.iter(|| is_pentagonal(n));
     }
 }
