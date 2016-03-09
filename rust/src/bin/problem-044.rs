@@ -14,15 +14,8 @@
 // of D?
 #![feature(test)]
 extern crate test;
-
-/// Determine whether a number is a pentagonal number
-///
-/// Applying the quadratic formula to the pentagonal number formula gives the
-/// equation used in this function (for positive n)
-fn is_pentagonal(p: u64) -> bool {
-    let n = (1.0 + (1.0 + 24.0*(p as f64)).sqrt()) / 6.0;
-    n == n.floor()
-}
+extern crate euler_util;
+use euler_util::is_pentagonal;
 
 pub fn solution() -> u64 {
     // Generate pentagonal numbers -- approx. upper bound found through trial and error

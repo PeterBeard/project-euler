@@ -7,6 +7,15 @@ extern crate test;
 
 pub mod bigint;
 
+/// Determine whether a number is a pentagonal number
+///
+/// Applying the quadratic formula to the pentagonal number formula gives the
+/// equation used in this function (for positive n)
+pub fn is_pentagonal(p: u64) -> bool {
+    let n = (1.0 + (1.0 + 24.0*(p as f64)).sqrt()) / 6.0;
+    n == n.floor()
+}
+
 /// Determine whether a number is prime
 pub fn is_prime(n: i64) -> bool {
     // Negative numbers, zero, and one are not prime
@@ -91,17 +100,14 @@ pub fn is_pandigital(n: u32, l: u32, k: u32) -> bool {
     }
     let mut digits: Vec<bool> = vec![false; (k + 1) as usize];
     let mut value = 1;
-    println!("{}", n);
     for _ in l..(k + 1) {
         let d = (n % (10*value))/value;
-        println!("  {}", d);
         if d > k {
             return false;
         }
         digits[d as usize] = true;
         value *= 10;
     }
-    println!("{:#?}", digits);
     for i in l..(k + 1) {
         if !digits[i as usize] {
             return false;
@@ -185,6 +191,14 @@ mod tests {
         assert_eq!(false, is_pandigital(1234, 4, 1));
     }
 
+    #[test]
+    fn test_is_pentagonal() {
+        assert!(is_pentagonal(1));
+        assert!(is_pentagonal(12));
+        assert_eq!(false, is_pentagonal(13));
+        assert_eq!(false, is_pentagonal(0));
+    }
+
     #[bench]
     fn bench_is_prime_composite(b: &mut Bencher) {
         let n = black_box(12346);
@@ -216,5 +230,10 @@ mod tests {
     #[bench]
     fn bench_is_pandigital(b: &mut Bencher) {
         b.iter(|| is_pandigital(12345, 1, 5));
+    }
+
+    #[bench]
+    fn bench_is_pentagonal(b: &mut Bencher) {
+        b.iter(|| is_pentagonal(12345));
     }
 }
