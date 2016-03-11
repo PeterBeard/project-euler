@@ -29,3 +29,8 @@ executable problem-001
   hs-source-dirs:      src
   default-language:    Haskell2010
 
+executable problem-002
+  main-is: problem-002.hs
+  build-depends:       base >=4.7 && <4.8
+  hs-source-dirs:      src
+  default-language:    Haskell2010
