@@ -19,48 +19,48 @@ executable project-euler
   main-is: main.hs
   -- other-modules:       
   -- other-extensions:    
-  build-depends:       base >=4.7 && <4.8
+  build-depends:       base >=4.7 && <=4.10
   hs-source-dirs:      src
   default-language:    Haskell2010
 
 executable problem-001
   main-is: problem-001.hs
-  build-depends:       base >=4.7 && <4.8
+  build-depends:       base >=4.7 && <=4.10
   hs-source-dirs:      src
   default-language:    Haskell2010
 
 executable problem-002
   main-is: problem-002.hs
-  build-depends:       base >=4.7 && <4.8
+  build-depends:       base >=4.7 && <=4.10
   hs-source-dirs:      src
   default-language:    Haskell2010
 
 executable problem-003
   main-is: problem-003.hs
-  build-depends:       base >=4.7 && <4.8
+  build-depends:       base >=4.7 && <=4.10
   hs-source-dirs:      src
   default-language:    Haskell2010
 
 executable problem-004
   main-is: problem-004.hs
-  build-depends:       base >=4.7 && <4.8
+  build-depends:       base >=4.7 && <=4.10
   hs-source-dirs:      src
   default-language:    Haskell2010
 
 executable problem-005
   main-is: problem-005.hs
-  build-depends:       base >=4.7 && <4.8
+  build-depends:       base >=4.7 && <=4.10
   hs-source-dirs:      src
   default-language:    Haskell2010
 
 executable problem-006
   main-is: problem-006.hs
-  build-depends:       base >=4.7 && <4.8
+  build-depends:       base >=4.7 && <=4.10
   hs-source-dirs:      src
   default-language:    Haskell2010
 
 executable problem-007
   main-is: problem-007.hs
-  build-depends:       base >=4.7 && <4.8
+  build-depends:       base >=4.7 && <=4.10
   hs-source-dirs:      src
   default-language:    Haskell2010
