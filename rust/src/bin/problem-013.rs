@@ -6,6 +6,9 @@
 #![feature(test)]
 extern crate test;
 
+extern crate euler_util;
+use euler_util::sum;
+
 pub fn solution() -> u64 {
     // The sum should be on the order of 10^52, so we can lose the last 40
     // or so digits without affecting the first 10
@@ -112,10 +115,7 @@ pub fn solution() -> u64 {
         5350353422
     ];
 
-    let mut sum: u64 = 0;
-    for v in VALUES.iter() {
-        sum += *v;
-    }
+    let mut sum = sum::<u64>(&VALUES[..], 0);
 
     // Truncate to 10 digits
     while sum > 10f64.powi(10) as u64 {

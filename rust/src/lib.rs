@@ -4,8 +4,14 @@
 // Various functions that seem to get used a lot
 #![feature(test)]
 extern crate test;
+use std::ops;
 
 pub mod bigint;
+
+/// Find the sum of a Vec
+pub fn sum<T: Copy + ops::Add<T, Output=T>>(v: &[T], initial: T) -> T {
+    v.iter().fold(initial, |acc, &x| acc + x)
+}
 
 /// Determine whether a number is a triangular number
 pub fn is_triangular(p: u64) -> bool {
@@ -146,6 +152,22 @@ pub fn is_pandigital(n: u32, l: u32, k: u32) -> bool {
 mod tests {
     use super::*;
     use test::{Bencher, black_box};
+
+    #[test]
+    fn test_sum() {
+        assert_eq!(15u8, sum::<u8>(&vec![1,2,3,4,5], 0));
+        assert_eq!(15u16, sum::<u16>(&vec![1,2,3,4,5], 0));
+        assert_eq!(15u32, sum::<u32>(&vec![1,2,3,4,5], 0));
+        assert_eq!(15u64, sum::<u64>(&vec![1,2,3,4,5], 0));
+
+        assert_eq!(15i8, sum::<i8>(&vec![1,2,3,4,5], 0));
+        assert_eq!(15i16, sum::<i16>(&vec![1,2,3,4,5], 0));
+        assert_eq!(15i32, sum::<i32>(&vec![1,2,3,4,5], 0));
+        assert_eq!(15i64, sum::<i64>(&vec![1,2,3,4,5], 0));
+
+        assert_eq!(15f32, sum::<f32>(&vec![1.0,2.0,3.0,4.0,5.0], 0.0));
+        assert_eq!(15f64, sum::<f64>(&vec![1.0,2.0,3.0,4.0,5.0], 0.0));
+    }
 
     #[test]
     fn is_2_prime() {
