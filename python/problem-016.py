@@ -2,6 +2,8 @@
 Copyright 2016 Peter Beard
 Distributed under the GNU GPL v2. For full terms, see the LICENSE file.
 
+Problem #16
+
 2^15 = 32768 and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.
 
 What is the sum of the digits of the number 2^1000?

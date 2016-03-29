@@ -2,6 +2,8 @@
 Copyright 2016 Peter Beard
 Distributed under the GNU GPL v2. For full terms, see the LICENSE file.
 
+Problem #21
+
 Let d(n) be defined as the sum of proper divisors of n (numbers less than n
 which divide evenly into n).
 If d(a) = b and d(b) = a, where a ≠ b, then a and b are an amicable pair and

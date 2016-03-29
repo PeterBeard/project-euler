@@ -2,6 +2,8 @@
 Copyright 2016 Peter Beard
 Distributed under the GNU GPL v2. For full terms, see the LICENSE file.
 
+Problem #18
+
 By starting at the top of the triangle below and moving to adjacent numbers on
 the row below, the maximum total from top to bottom is 23.
 

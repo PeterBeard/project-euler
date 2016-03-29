@@ -2,6 +2,8 @@
 Copyright 2016 Peter Beard
 Distributed under the GNU GPL v2. For full terms, see the LICENSE file.
 
+Problem #6
+
 The sum of the squares of the first ten natural numbers is,
 1^2 + 2^2 + ... + 10^2 = 385
 
