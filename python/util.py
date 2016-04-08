@@ -17,3 +17,12 @@ def is_prime(n):
             return False
 
     return True
+
+
+def digits(n):
+    """Return a list of the digits of n"""
+    digits = []
+    while n > 0:
+        digits.insert(0, n%10)
+        n //= 10
+    return digits
