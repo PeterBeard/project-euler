@@ -16,15 +16,7 @@ be written as a 1 through 9 pandigital.
 HINT: Some products can be obtained in more than one way so be sure to only
 include it once in your sum.
 """
-
-def digits(n):
-    """Return a list of the digits of n"""
-    digits = []
-    while n > 0:
-        digits.insert(0, n%10)
-        n //= 10
-    return digits
-
+from util import digits
 
 def is_pandigital_product(a, b):
     """Determine whether a * b is a pandigital product."""

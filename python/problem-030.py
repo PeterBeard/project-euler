@@ -18,14 +18,7 @@ The sum of these numbers is 1634 + 8208 + 9474 = 19316.
 Find the sum of all the numbers that can be written as the sum of fifth powers
 of their digits.
 """
-
-def digits(n):
-    """Return a list of the digits of n"""
-    digits = []
-    while n > 0:
-        digits.insert(0, n%10)
-        n //= 10
-    return digits
+from util import digits
 
 def fifth_digits(n):
     """Return the sum of the digits of n raised to the fifth power"""
