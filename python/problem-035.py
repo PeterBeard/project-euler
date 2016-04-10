@@ -13,22 +13,7 @@ There are thirteen such primes below 100: 2, 3, 5, 7, 11, 13, 17, 31, 37, 71,
 How many circular primes are there below one million?
 """
 from math import log10, ceil
-
-def prime_sieve(upper_bound):
-    """Mark all integers from 1 to upper_bound as prime (True) or composite (False)."""
-    primes = [True] * upper_bound
-    primes[0] = False
-    primes[1] = False
-
-    for n in range(2, upper_bound):
-        # Mark every multiple of n as composite
-        if primes[n]:
-            c = 2*n
-            while c < upper_bound:
-                primes[c] = False
-                c += n
-    return primes
-
+from util import prime_sieve
 
 def rotate_digits(n):
     """Calculate the next rotation of the digits of n"""
