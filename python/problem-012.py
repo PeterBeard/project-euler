@@ -22,34 +22,28 @@ Let us list the factors of the first seven triangle numbers:
 
 We can see that 28 is the first triangle number to have over five divisors.
 
-What is the value of the first triangle number to have over five hundred
-divisors?
+What is the value of the first triangle number to have over five hundred divisors?
 """
-from math import ceil, floor, sqrt
+from math import sqrt
 
-def n_factors(n):
-    """Return the number of unique factors of the integer n (including 1 and n)"""
+def num_factors(n):
+    """Find the number of factors of n"""
+    max_factor = int(sqrt(n) + 1)
     count = 2
-    max_factor = sqrt(n)
-
-    # Is n a perfect square?
-    if ceil(max_factor) == floor(sqrt(n)):
-        count -= 1  # sqrt(n) will get counted twice
-
-    max_factor = int(max_factor + 1)
-
-    for f in range(2, max_factor):
-        if n % f == 0:
+    for i in range(2, max_factor):
+        if n % i == 0:
+            # Each factor has a partner > sqrt(n)
             count += 2
     return count
 
+
 def solution():
-    n = 28
-    next_num = 8
-    while n_factors(n) < 500:
-        n += next_num
-        next_num += 1
+    value = 28
+    n = 8
+    while num_factors(value) < 500:
+        value += n
+        n += 1
+    return value
 
-    return n
 
-print("The first triangle number with more than 500 factors is {}".format(solution()))
+print("The first triangle number with more than 500 divisors is {}".format(solution()))
