@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-O2 -Wall
+CFLAGS=-O2 -Wall -std=c11
 BUILD_DIR=build
 
 SRC=$(wildcard src/problem-*.c)
