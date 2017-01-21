@@ -16,7 +16,7 @@
  */
 #include <stdio.h>
 
-long int main()
+int main()
 {
     long int max_product = 0;
     const int data[1000] = {
