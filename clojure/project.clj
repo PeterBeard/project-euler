@@ -9,4 +9,5 @@
   :profiles {
     :problem-001 {:main problem-001.core}
     :problem-002 {:main problem-002.core}
+    :problem-003 {:main problem-003.core}
   })
