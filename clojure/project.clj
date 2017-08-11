@@ -13,4 +13,5 @@
     :problem-004 {:main problem-004.core}
     :problem-005 {:main problem-005.core}
     :problem-006 {:main problem-006.core}
+    :problem-007 {:main problem-007.core}
   })
